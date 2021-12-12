@@ -1,39 +1,59 @@
 <template>
   <div id="app">
-    <nav class="c-nav">
-      <ul class= "c-nav-list">
-        <li class="c-nav-list-item">
-          Home
-        </li>
-
-        <li class="c-nav-list-item">
-          Contact
-        </li>
-      </ul>
-    </nav>
-    <!-- content -->
+    <Navigation/>
     <h1>
       Eurosong festival
     </h1>
+    <Counter/>
 
-    <div class="c-feedback warning">
-      fout gebeurd
-    </div>
-    <div class="c-feedback error">
-      tis kapot
-    </div>
-    <div class="c-feedback succes">
-      het werkt
-    </div>
+    <Feedback 
+      v-for="(message, index) in messages"
+      :key = "index"
+      :message="message.message"
+      :classType="message.classType"
+    />
+
+    <button>
+      Add message
+    </button>
+
   </div>
 </template>
 
 <script>
+import Navigation from "./vue-components/Navigation.vue";
+import Counter from './vue-components/Counter.vue';
+import Feedback from './vue-components/Feedback.vue';
+
+
 //import whole styling for the app
 import style from './scss/style.scss';
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Navigation,
+    Counter,
+    Feedback
+  },
+  data() {
+    return {
+      messages: [
+        {
+          message: "error, tis kapot",
+          classType: "warning"
+        },
+        {
+          message: "great succes",
+          classType: "succes"
+        },
+        {
+          message: "test",
+          classType: "test"
+        }
+      ]
+    }
+  }
 }
 </script>
 
