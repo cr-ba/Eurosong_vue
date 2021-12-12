@@ -1,0 +1,26 @@
+@mixin alert{
+    background-color: orange;
+    margin-bottom: 10px;
+    border: 1px solid orange;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+.c-feedback.warning{
+    @include alert();
+    background-color: orange;
+    border: 1px solid orange;
+}
+
+.c-feedback.error{
+    @include alert();
+    background-color: red;
+    border: 1px solid red;
+}
+
+.c-feedback.succes{
+    @include alert();
+    background-color: green;
+    border: 1px solid green;
+}

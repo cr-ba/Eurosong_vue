@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Eurosong festival app"/>
+    <nav class="c-nav">
+      <ul class= "c-nav-list">
+        <li class="c-nav-list-item">
+          Home
+        </li>
+
+        <li class="c-nav-list-item">
+          Contact
+        </li>
+      </ul>
+    </nav>
+    <!-- content -->
+    <h1>
+      Eurosong festival
+    </h1>
+
+    <div class="c-feedback warning">
+      fout gebeurd
+    </div>
+    <div class="c-feedback error">
+      tis kapot
+    </div>
+    <div class="c-feedback succes">
+      het werkt
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import whole styling for the app
+import style from './scss/style.scss';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  name: 'App'
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
