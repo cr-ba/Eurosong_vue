@@ -7,13 +7,19 @@
         Game
       </h1>
 
-      <!-- <div v-for="song in songs" :key="song.id"> 
-        {{song.artist.name}} - {{song.title}}
-      </div> -->
-
       <Carousel
         :items="songs"
+        :activeIndex="activeSongIndex"
+
+        @change-index="changeActiveSongIndex" 
       />
+
+      <div v-for="(vote,index) in votes" :key="index">
+          <button @click="addVote(vote.points)" v-if="!vote.isVoted">
+            Add {{vote.points}} points
+          </button>
+      </div>
+
     </div>
 </template>
 
@@ -28,7 +34,30 @@ import Carousel from '../vue-components/Carousel.vue';
         },
         data() {
           return {
-            songs: []
+            songs: [],
+            activeSongIndex: 0,
+            votes: [
+              {
+                points: 1,
+                isVoted: false
+
+              },
+              {
+                points: 2,
+                isVoted: false
+
+              },
+              {
+                points: 4,
+                isVoted: false
+
+              },
+              {
+                points: 8,
+                isVoted: false
+
+              }
+            ]
           }
         },
         mounted() {
@@ -83,7 +112,57 @@ import Carousel from '../vue-components/Carousel.vue';
               this.songs = songs;
               //console.log(songs);
             });
+          },
+
+          postVote(points) {
+            const songId = this.songs[this.activeSongIndex].id;
+            const url = "http://webservies.be/eurosong/Votes";
+            
+            fetch(url, {
+              method: "POST",
+              headers: {
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json;charset=UTF-8'
+              },
+              body: JSON.stringify({
+                songID: songId,
+                points: points,
+              })
+            }).then((response) => {
+              return response.json()
+            }).then((result) => {
+              console.log(result)
+            })
+          },
+
+
+          changeActiveSongIndex(index) {
+            this.activeSongIndex = index;
+          },
+
+          addVote(points) {
+            let votes = this.votes;
+
+            //create new array
+            votes.map((vote) => {
+              if(vote.points == points) {
+                vote.isVoted = true;
+              }
+              return vote;
+            });
+
+            //post it to the api
+            this.postVote(points);
+
+            //check if all votes are set to true OR there are nog 'false' votes
+            let activeVotes = votes.filter((vote) => vote.isVoted == true);
+            
+            //if everything is voted, redirect to ranking
+            if (activeVotes.length == votes.length) {
+              this.goToPage("ranking");
+            }
           }
+
         }
     }
 </script>
